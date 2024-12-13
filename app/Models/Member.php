@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Member extends Model
 {
     use HasFactory;
-    protected $fillable=['student_id', 'title','start_date','End_date','status','files','Member_id'];
+    protected $fillable=['student_id', 'project_id'];
     public function student()
     {
         return $this->belongsTo(student::class);
     }  
-    public function Member()
+    public function project()
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(project::class);
     }  
 }

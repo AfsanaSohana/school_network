@@ -7,36 +7,28 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\BaseController;
 class ProjectController extends BaseController
 {
-    public function index()
-    {
-        $projects = Project::with('members.student')->where('student_id', auth()->user()->id)->get();
-        return view('projects.index', compact('projects'));
+    public function index(){
+        $data=Project::get();
+        return $this->sendResponse($data,"Project data");
     }
 
-    public function create()
-    {
-        return view('projects.create');
+    public function store(Request $request){
+        $data=Project::create($request->all());
+        return $this->sendResponse($data,"Project created successfully");
+    }
+    public function show(Project $project){
+        return $this->sendResponse($project,"Project data");
     }
 
-    public function store(Request $request)
+    public function update(Request $request,$id){
+
+        $data=Project::where('id',$id)->update($request->all());
+        return $this->sendResponse($id,"Project updated successfully");
+    }
+
+    public function destroy(Project $project)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'status' => 'required|in:ongoing,completed',
-            'files' => 'nullable|file|mimes:pdf,doc,docx',
-        ]);
-
-        $validated['student_id'] = auth()->user()->id;
-
-        if ($request->hasFile('files')) {
-            $validated['files'] = $request->file('files')->store('project_files');
-        }
-
-        $project = Project::create($validated);
-
-        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+        $project=$project->delete();
+        return $this->sendResponse($project,"Project deleted successfully");
     }
 }

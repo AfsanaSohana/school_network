@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\APi\ProjectController;
+
 
 
 /*
@@ -20,3 +22,5 @@ Route::get('/', function () {
 });
 Route::get('/register', [AuthController::class, '_register'])->name('register');
 Route::post('/register', [AuthController::class, '_register']);
+Route::resource('project', ProjectController::class);
+
