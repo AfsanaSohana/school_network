@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\APi\ProjectController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\MemberController;
+use App\Http\Controllers\Api\ReadingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,8 +48,15 @@ Route::controller(StudentController::class)->group(function(){
     Route::delete('student/{student}','destroy');
     Route::post('student/create','store');
 });
+Route::controller(ReadingController::class)->group(function(){
+    Route::get('reading','index');
+    Route::get('reading/{reading}','show');
+    Route::post('reading/edit/{reading}','update');
+    Route::delete('reading/{reading}','destroy');
+    Route::post('reading/create','store');
+});
 Route::controller(MemberController::class)->group(function(){
-    Route::post('member','index');
+    Route::get('member','index');
     Route::get('member/{member}','show');
     Route::post('member/edit/{member}','update');
     Route::delete('member/{member}','destroy');

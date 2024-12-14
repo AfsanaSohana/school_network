@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects and Readings Tab</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #007bff;
+      color: white;
+      border-bottom: 2px solid #0056b3;
+    }
+    .header .title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .header .user {
+      font-size: 18px;
+    }
+    .tabs {
+      display: flex;
+      background-color: #f4f4f4;
+      border-bottom: 2px solid #ddd;
+    }
+    .tabs button {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      background-color: #f4f4f4;
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .tabs button:hover {
+      background-color: #ddd;
+    }
+    .tabs button.active {
+      background-color: #007bff;
+      color: white;
+    }
+    .content {
+      padding: 30px;
+      display: none; /* Initially hide all content sections */
+      animation: fadeIn 0.5s ease-out;
+    }
+    .content.active {
+      display: block; /* Show only the active content section */
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    table th {
+      background-color: #007bff;
+      color: white;
+    }
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-group input, 
+    .form-group select, 
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .form-group button {
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .form-group button:hover {
+      background-color: #218838;
+    }
+    .submit-btn {
+      text-align: right;
+    }
+    .submit-btn button {
+      background-color: #007bff;
+      color: white;
+    }
+    .submit-btn button:hover {
+      background-color: #0056b3;
+    }
+    .radio-group label {
+      display: inline-block;
+      margin-right: 20px;
+    }
+    .form-group input[type="file"] {
+      padding: 0;
+    }
+    .tabs button.active {
+      background-color: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header">
+      <div class="title">Projects and Readings Tab</div>
+      <div class="user">User: <strong>Sohana Afsana</strong></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-button active" data-tab="personal-info">Personal Info</button>
+      <button class="tab-button" data-tab="projects">Projects</button>
+      <button class="tab-button" data-tab="readings">Readings</button>
+    </div>
+
+    <!-- Personal Info Content Section -->
+    <div id="personal-info" class="content active">
+      <h2>Personal Info</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input type="text" id="address" name="address">
+        </div>
+        <div class="form-group">
+          <label for="dob">DOB:</label>
+          <input type="date" id="dob" name="dob">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone:</label>
+          <input type="text" id="phone" name="phone">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <div class="radio-group">
+            <label><input type="radio" id="male" name="gender" value="M"> Male</label>
+            <label><input type="radio" id="female" name="gender" value="F"> Female</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <select id="country" name="country">
+            <option value="us">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="bd">Bangladesh</option>
+            <option value="in">India</option>
+            <option value="ca">Canada</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email">
+        </div>
+        <div class="submit-btn">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Projects Content Section -->
+    <div id="projects" class="content">
+      <h2>Projects</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Project A</td>
+            <td>01/01/2019</td>
+            <td>15/08/2019</td>
+            <td>Completed</td>
+          </tr>
+          <tr>
+            <td>Project B</td>
+            <td>06/06/2019</td>
+            <td>06/06/2020</td>
+            <td>In progress</td>
+          </tr>
+        </tbody>
+      </table>
+      <form>
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title">
+        </div>
+        <div class="form-group">
+          <label for="start-date">Start Date:</label>
+          <input type="date" id="start-date" name="start-date">
+        </div>
+        <div class="form-group">
+          <label for="end-date">End Date:</label>
+          <input type="date" id="end-date" name="end-date">
+        </div>
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <select id="status" name="status">
+            <option value="completed">Completed</option>
+            <option value="in-progress">In progress</option>
+          </select>
+        </div>
+        <div class="submit-btn">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Readings Content Section -->
+    <div id="readings" class="content">
+      <h2>Readings</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>DOI</th>
+            <th>Year</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Book A</td>
+            <td>75623</td>
+            <td>2010</td>
+            <td>Book</td>
+          </tr>
+          <tr>
+            <td>Magazine A</td>
+            <td>94383</td>
+            <td>2017</td>
+            <td>Magazine</td>
+          </tr>
+        </tbody>
+      </table>
+      <form>
+        <div class="form-group">
+          <label for="reading-title">Title:</label>
+          <input type="text" id="reading-title" name="reading-title">
+        </div>
+        <div class="form-group">
+          <label for="doi">DOI:</label>
+          <input type="text" id="doi" name="doi">
+        </div>
+        <div class="form-group">
+          <label for="year">Year:</label>
+          <input type="number" id="year" name="year" min="1900" max="2100">
+        </div>
+        <div class="form-group">
+          <label for="type">Type:</label>
+          <select id="type" name="type">
+            <option value="book">Book</option>
+            <option value="magazine">Magazine</option>
+            <option value="journal">Journal</option>
+          </select>
+        </div>
+        <div class="submit-btn">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for Tab Navigation
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const contentSections = document.querySelectorAll('.content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove 'active' class from all buttons and contents
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        contentSections.forEach(content => content.classList.remove('active'));
+
+        // Add 'active' class to the clicked button and corresponding content
+        button.classList.add('active');
+        const tabId = button.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
