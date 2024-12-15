@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\APi\ProjectController;
-use App\Http\Controllers\APi\HomeController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentAuthController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\HomeController;
 
 
 /*
@@ -20,20 +22,22 @@ use App\Http\Controllers\APi\HomeController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-// Route::get('/register', [AuthController::class, '_register'])->name('register');
-// Route::post('/register', [AuthController::class, '_register']);
-// Route::get("/",[AuthController::class,'_login']);
-// Route::post("login",[AuthController::class,"_login"]);
+// Route::get('/register', [AuthController::class, 'register_form'])->name('register');
+// Route::post('/register', [AuthController::class, 'register'])->name('register.save');
 
-// Route::prefix("dashboard")->middleware("checkAuth")->group(function(){
+// Route::get("/admin/login",[AuthController::class,'login_form'])->name('login');
+// Route::post("/admin/login",[AuthController::class,"login"])->name('login.check');
 
-    // Route::get("/",[DashboardController::class,"page"]);
 
-//     Route::resource('project', ProjectController::class);
-//     Route::get("/logout",[DashboardController::class,"logout"]);
+Route::get('/register', [StudentAuthController::class, 'register'])->name('student.register');
+Route::post('/register', [StudentAuthController::class, 'register_save'])->name('student.register.save');
+Route::get("/login",[StudentAuthController::class,'login'])->name('student.login');
+Route::post("login",[StudentAuthController::class,"login_check"])->name('student.login.check');
+Route::get('/logout', [StudentAuthController::class,'logout'])->name('student.LogOut');
+Route::get('/_logout', [StudentAuthController::class,'_logout'])->name('student._logout');
 
-// });
-Route::get('/home', function () {
-    return view('home'); // Assumes you have 'test.blade.php' in resources/views
+
+Route::middleware(['student_role'])->prefix('student')->group(function(){
+    Route::get('dashboard', [StudentController::class,'dashboard'])->name('student.dashboard');
+    Route::get('information', [StudentController::class,'information'])->name('student.information');
 });
-Route::get('/home', [HomeController::class, '_home']);

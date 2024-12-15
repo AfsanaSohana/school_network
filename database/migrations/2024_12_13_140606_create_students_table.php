@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('email');
             $table->string('password');
-            $table->string('status');
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }
