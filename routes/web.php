@@ -33,6 +33,7 @@ Route::get('/register', [StudentAuthController::class, 'register'])->name('stude
 Route::post('/register', [StudentAuthController::class, 'register_save'])->name('student.register.save');
 Route::get("/login",[StudentAuthController::class,'login'])->name('student.login');
 Route::post("login",[StudentAuthController::class,"login_check"])->name('student.login.check');
+
 Route::get('/logout', [StudentAuthController::class,'logout'])->name('student.LogOut');
 Route::get('/_logout', [StudentAuthController::class,'_logout'])->name('student._logout');
 

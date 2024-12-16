@@ -26,11 +26,16 @@ class StudentController extends Controller
     public function store(Request $request){
         $data=Student::create($request->all());
         return $this->sendResponse($data,"Student created successfully");
+        $data=Project::create($request->all());
+        return $this->sendResponse($data,"Project created successfully");
+        $data=Reading::create($request->all());
+        return $this->sendResponse($data,"Reading created successfully");
     }
     
     public function destroy(Student $student)
     {
         $student=$student->delete();
         return $this->sendResponse($student,"Student deleted successfully");
+     
     }
 }
