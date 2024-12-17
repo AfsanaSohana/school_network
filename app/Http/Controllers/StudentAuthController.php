@@ -43,6 +43,7 @@ class StudentAuthController extends Controller
 
     public function setSession($user){
         return request()->session()->put([
+                'userRole'=>'student',
                 'userId'=>encryptor('encrypt',$user->id),
                 'userName'=>encryptor('encrypt',$user->name),
                 'userEmail'=>encryptor('encrypt',$user->email)

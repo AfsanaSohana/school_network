@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Reading;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -17,19 +18,54 @@ class StudentController extends Controller
         $student_id=encryptor('decrypt',request()->session()->get('userId'));
         
         $student=Student::find($student_id);
-        $project=Project::where('student_id',$student_id)->get();
-        $reading=Reading::where('student_id',$student_id)->get();
+        $members=Student::where('status',1)->get();
+        $projects=Project::where('student_id',$student_id)->get();
+        $readings=Reading::where('student_id',$student_id)->get();
         
-        return view('student.information',compact('student','project','reading'));
+        return view('student.information',compact('student','projects','readings','members'));
     }
 
-    public function store(Request $request){
-        $data=Student::create($request->all());
-        return $this->sendResponse($data,"Student created successfully");
-        $data=Project::create($request->all());
-        return $this->sendResponse($data,"Project created successfully");
-        $data=Reading::create($request->all());
-        return $this->sendResponse($data,"Reading created successfully");
+    public function store(Request $request,$id){
+        $input=$request->all();
+        unset($input['_token'],$input['password']);
+        if($request->password){
+            $input['password']=bcrypt($request->password);
+        }
+
+        $data=Student::where('id',$id)->update($input);
+        return redirect()->route('student.information')->with('success','Successfully updated');
+    }
+
+    public function project_store(Request $request){
+
+        $input=$request->all();
+
+        $files=[];
+          if($request->hasFile('files')){
+             foreach($request->file('files') as $f){
+                 $documentname=time().rand(1111,9999).".".$f->extension();
+                 $documentPath=public_path().'/uploads/project';
+                 if($f->move($documentPath,$documentname)){
+                     array_push($files,$documentname);
+                 }
+             }
+         }
+ 
+         $input['files']=implode(',',$files);
+         $input['Member_id']=implode(',',$request->member);
+         $input['student_id']=encryptor('decrypt',request()->session()->get('userId'));
+
+
+        $data=Project::create($input);
+        return redirect()->route('student.information')->with('success','Project created successfully');
+    }
+    public function reading_store(Request $request){
+
+        $input=$request->all();
+        $input['student_id']=encryptor('decrypt',request()->session()->get('userId'));
+
+        $data=Reading::create($input);
+        return redirect()->route('student.information')->with('success','Reading created successfully');
     }
     
     public function destroy(Student $student)

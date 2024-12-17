@@ -30,7 +30,7 @@ class AuthController extends Controller
             if($user){
                 if(Hash::check($request->password , $user->password)){
                     $this->setSession($user);
-                    return redirect()->route('dashboard')->with('success','Successfully login');
+                    return redirect()->route($user->role.'.dashboard')->with('success','Successfully login');
                 }else
                     return redirect('login')->with('error','Your email or password is wrong!');
             }else
@@ -43,7 +43,7 @@ class AuthController extends Controller
 
     public function setSession($user){
         return request()->session()->put([
-                'userRole'=>'student',
+                'userRole'=>$user->role,
                 'userId'=>encryptor('encrypt',$user->id),
                 'userName'=>encryptor('encrypt',$user->name),
                 'userEmail'=>encryptor('encrypt',$user->email)
@@ -53,7 +53,12 @@ class AuthController extends Controller
 
     public function logout(){
         request()->session()->flush();
-        return redirect('login')->with('danger','Successfully logged out');
+        return redirect('admin/login')->with('danger','Successfully logged out');
+    }
+
+    public function _logout(){
+        request()->session()->flush();
+        return redirect('admin/login')->with('error','You are not active user');
     }
 
 }
